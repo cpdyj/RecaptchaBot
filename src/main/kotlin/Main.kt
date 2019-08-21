@@ -19,7 +19,7 @@ val keyMap = ConcurrentHashMap<String, User>()
 
 var botServer: BotServer? = null
 fun main() {
-    val botKey = System.getenv("RECAPTCHA_BOT_API_KEY") ?: ""
+    val botKey = System.getenv("RECAPTCHA_BOT_API_KEY") ?: throw RuntimeException("RECAPTCHA_BOT_API_KEY is not set.")
     Json.mapper.registerKotlinModule().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     val vertx = Vertx.vertx()
 
