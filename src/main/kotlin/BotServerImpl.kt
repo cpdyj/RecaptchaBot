@@ -108,6 +108,7 @@ class BotServerImpl(
             request.timeout(timeout)
 
             val targs = args.filter { it.second != null }
+            //println(targs)
             if (targs.isEmpty()) {
                 request.send {
                     if (it.succeeded()) {
@@ -141,7 +142,10 @@ fun putArgsToForm(args: List<Pair<String, Any?>>, form: MultipartForm) =
                     form.attribute(key, value.fileId)
                 }
             }
-            isSimpleType(value) -> form.attribute(key, value.toString())
+            isSimpleType(value) -> {
+                form.attribute(key, value.toString())
+                //println("[$key]${value.toString()}")
+            }
             else -> form.attribute(key, Json.mapper.writeValueAsString(value))
         }
     }
@@ -176,10 +180,10 @@ fun defaultHttpTimeout(command: String, args: List<Pair<String, Any?>>): Long =
 fun isSimpleType(o: Any?): Boolean =
     when (o) {
         null -> true
-        String -> true
-        Int -> true
-        Long -> true
-        Boolean -> true
-        Double -> true
+        is String -> true
+        is Int -> true
+        is Long -> true
+        is Boolean -> true
+        is Double -> true
         else -> false
     }
