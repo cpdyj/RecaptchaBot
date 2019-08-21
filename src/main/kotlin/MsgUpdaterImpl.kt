@@ -17,7 +17,6 @@ class MsgUpdaterImpl(val botServer: BotServer, val delay: Long = 200, val timeou
         botServer.getApiContext().getUpdates(offset = offset + 1, timeout = timeout, allowedUpdates = emptyList()) {
             if (it.succeeded()) {
                 val result = it.result()!!.result!!
-                println(result.size)
                 result.forEach {
                     offset = if (it.updateId > offset) it.updateId else offset
                     botServer.dispatchUpdate(it)

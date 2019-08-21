@@ -108,7 +108,6 @@ class BotServerImpl(
             request.timeout(timeout)
 
             val targs = args.filter { it.second != null }
-            //println(targs)
             if (targs.isEmpty()) {
                 request.send {
                     if (it.succeeded()) {
@@ -142,10 +141,7 @@ fun putArgsToForm(args: List<Pair<String, Any?>>, form: MultipartForm) =
                     form.attribute(key, value.fileId)
                 }
             }
-            isSimpleType(value) -> {
-                form.attribute(key, value.toString())
-                //println("[$key]${value.toString()}")
-            }
+            isSimpleType(value) -> form.attribute(key, value.toString())
             else -> form.attribute(key, Json.mapper.writeValueAsString(value))
         }
     }
